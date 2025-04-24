@@ -69,10 +69,6 @@ class TracksideConnector():
 
         self.enabled = True
 
-        if self._rhapi.race.status != RaceStatus.READY:
-            self._rhapi.race.stop() #doSave executes asynchronously, but we need it done now
-            self._rhapi.race.save()
-
         if arg.get('p'):
             ts_pilot_callsigns = arg.get('p')
             ts_pilot_ids = arg.get('p_id')
@@ -160,6 +156,7 @@ class TracksideConnector():
 
     def race_stop(self, arg=None):
         self._rhapi.race.stop()
+        self._rhapi.race.save()
 
     def race_abort(self, arg=None):
         self._rhapi.race.clear()
